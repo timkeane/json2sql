@@ -1,0 +1,8 @@
+{
+  "name": "json2sql",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
