@@ -5,7 +5,7 @@ const protocol = process.env.PROTOCOL;
 const host = process.env.HOST;
 const port = process.env.PORT;
 const namespace = process.env.NAMESPACE;
-const url = `${protocol}://${host}:${port}/geoserver/carto/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=${namespace}:`;
+const url = `${protocol}://${host}:${port}/geoserver/${namespace}/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=${namespace}:`;
 
 const layers = JSON.parse(process.env.LAYERS);
 
@@ -117,6 +117,7 @@ layers.forEach(layer => {
   const table = layer.replace(/_SDO/, '');
   const sql = `${outDir}${table}.sql`;
   fs.appendFileSync(`${outDir}all.sql`, `\\i ${sql};\n`); 
+  console.log(`fetching ${url}${layer}`);
   fetch(`${url}${layer}`).then(response => {
     response.json().then(geojson => {
       const features = geojson.features;
@@ -143,6 +144,8 @@ layers.forEach(layer => {
       fs.appendFileSync(sql, `\nUPDATE ${table} SET geom = ST_SetSRID(geom,2263);\n`);
       fs.appendFileSync(sql, `\nCREATE INDEX ${table}_geom_idx ON ${table} USING GIST (geom);\n`); 
       fs.appendFileSync(sql, `\nCREATE VIEW ${table}_vw AS SELECT * FROM ${table};\n`); 
+    }).catch(err => {
+      console.error(err);
     });
   });
 });
