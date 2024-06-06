@@ -7,40 +7,7 @@ const port = process.env.PORT;
 const namespace = process.env.NAMESPACE;
 const url = `${protocol}://${host}:${port}/geoserver/carto/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=${namespace}:`;
 
-const layers = [
-  'BACKGROUND_SDO',
-  // 'BOARDWALK_SDO',
-  'BOROUGH_BORDER_SDO',
-  'BOROUGH_POINT_SDO',
-  // 'BUILDING_SDO',
-  // 'CENTERLINE_SDO',
-  'HYDRO_LABELLINE_SDO',
-  'HYDRO_LABELPOINT_SDO',
-  'HYDRO_LABELPOLY_SDO',
-  'LANDMASSFRINGE_SDO',
-  'LANDMASSPANGAEAWET_SDO',
-  'LOW_RES_ROAD_SDO',
-  // 'MARSH_SDO',
-  // 'MEDIAN_SDO',
-  'NEIGHBORHOOD_POINT_SDO',
-  // 'OPEN_SPACE_NO_PARK_SDO',
-  // 'PARKING_LOT_SDO',
-  // 'PARK_LABEL_SDO',
-  // 'PARK_SDO',
-  // 'PAVEMENT_EDGE2D_SDO',
-  // 'PLAZA_SDO',
-  // 'RAILROAD_BRIDGE_SDO',
-  // 'RAILROAD_ELEVATED_SDO',
-  // 'RAILROAD_PASSENGER_SDO',
-  // 'RAILROAD_STRUCTURE_SDO',
-  // 'ROADBED_SDO',
-  'ROAD_NATEARTH_SDO',
-  'ROAD_TIGER_SDO',
-  // 'SIDEWALK_SDO',
-  // 'TOLL_STRUCT_SDO',
-  // 'TRANSPORT_STRUCTURE_SDO',
-  // 'TUNNEL_SDO'
-];
+const layers = JSON.parse(process.env.LAYERS);
 
 const outDir = './sql/';
 
