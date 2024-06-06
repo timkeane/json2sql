@@ -4,7 +4,8 @@ const fs = require('fs');
 const protocol = process.env.PROTOCOL;
 const host = process.env.HOST;
 const port = process.env.PORT;
-const url = `${protocol}://${host}:${port}/geoserver/carto/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=carto:`;
+const namespace = process.env.NAMESPACE;
+const url = `${protocol}://${host}:${port}/geoserver/carto/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=${namespace}:`;
 
 const layers = [
   'BACKGROUND_SDO',
