@@ -80,3 +80,6 @@ pg.env
 .vscode/
 
 sql
+*.zip
+*.gdb
+
