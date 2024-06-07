@@ -79,7 +79,7 @@ pg.env
 
 .vscode/
 
-sql
+sql/
 *.zip
 *.gdb
 

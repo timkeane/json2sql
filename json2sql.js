@@ -5,11 +5,10 @@ const protocol = process.env.PROTOCOL;
 const host = process.env.HOST;
 const port = process.env.PORT;
 const namespace = process.env.NAMESPACE;
+const outDir = process.env.OUT;
 const url = `${protocol}://${host}:${port}/geoserver/${namespace}/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&typeName=${namespace}:`;
 
 const layers = JSON.parse(process.env.LAYERS);
-
-const outDir = './sql/';
 
 const reserved = [
   'ALL',
@@ -106,7 +105,7 @@ function createTable(table, feature, sql) {
   const properties = feature.properties;
   for (const prop in properties) {
     const column = reserved.indexOf(prop.toUpperCase()) === -1 ? prop : `${prop}_`;
-    const type = isNaN(properties[prop]) ? 'TEXT' : 'NUMERIC';
+    const type = typeof value === properties[prop] ? 'NUMERIC' : 'TEXT';
     create += `\t${column} ${type},\n`
   }
   create += '\tgeom GEOMETRY\n);\n\n';
@@ -116,7 +115,7 @@ function createTable(table, feature, sql) {
 layers.forEach(layer => {
   const table = layer.replace(/_SDO/, '');
   const sql = `${outDir}${table}.sql`;
-  fs.appendFileSync(`${outDir}all.sql`, `\\i ${sql};\n`); 
+  fs.appendFileSync(`${outDir}all.sql`, `\\i ${table}.sql;\n`); 
   console.log(`fetching ${url}${layer}`);
   fetch(`${url}${layer}`).then(response => {
     response.json().then(geojson => {
@@ -128,13 +127,13 @@ layers.forEach(layer => {
         const properties = feature.properties;
         const values = [];
         Object.values(properties).forEach(value => {
-          if (isNaN(value)) {
-            values.push(`'${value.replace(/'/, "''")}'`);
+          if (typeof value === 'number') {
+            values.push(value);
           } else {
-            if (value !== 0 && !value) {
+            if (value === undefined || value === null || value === '') {
               values.push('NULL');
             } else {
-              values.push(value);
+              values.push(`'${value.replace(/'/, "''")}'`);
             }
           }
         });
