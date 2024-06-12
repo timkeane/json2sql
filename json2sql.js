@@ -105,7 +105,7 @@ function createTable(table, feature, sql) {
   const properties = feature.properties;
   for (const prop in properties) {
     const column = reserved.indexOf(prop.toUpperCase()) === -1 ? prop : `${prop}_`;
-    const type = typeof value === properties[prop] ? 'NUMERIC' : 'TEXT';
+    const type = typeof properties[prop] === 'number' ? 'NUMERIC' : 'TEXT';
     create += `\t${column} ${type},\n`
   }
   create += '\tgeom GEOMETRY\n);\n\n';
