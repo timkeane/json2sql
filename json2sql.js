@@ -133,7 +133,7 @@ layers.forEach(layer => {
             if (value === undefined || value === null || value === '') {
               values.push('NULL');
             } else {
-              values.push(`'${value.replace(/'/, "''")}'`);
+              values.push(`'${value.replace(/'/g, "''")}'`);
             }
           }
         });
