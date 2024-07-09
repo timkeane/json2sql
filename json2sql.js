@@ -11,6 +11,7 @@ const url = `${protocol}://${host}:${port}/geoserver/${namespace}/ows?service=WF
 const layers = JSON.parse(process.env.LAYERS);
 
 const reserved = [
+  ':',
   'ALL',
   'ANALYSE',
   'ANALYZE',
@@ -106,7 +107,10 @@ function dropTable(table, sql) {
 function createTable(table, feature, sql) {
   let create = `CREATE TABLE ${table} (\n`;
   const properties = feature.properties;
-  for (const prop in properties) {
+  for (let prop in properties) {
+    if (prop.indexOf(':') > -1) {
+      prop = prop.replace(/\:/g, '');
+    }
     const column = reserved.indexOf(prop.toUpperCase()) === -1 ? prop : `${prop}_`;
     const type = typeof properties[prop] === 'number' ? 'NUMERIC' : 'TEXT';
     create += `\t${column} ${type},\n`
