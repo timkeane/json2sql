@@ -112,12 +112,27 @@ function createTable(table, feature, sql) {
   fs.appendFileSync(sql, create);
 }
 
+function getTableName(layer) {
+  if (typeof layer === 'string') {
+    return layer.replace(/_SDO/, '');
+  }
+  return layer.name;
+}
+
+function getJsonUrl(layer) {
+  if (typeof layer === 'string') {
+    return `${url}${layer}`;
+  }
+  return layer.url;
+}
+
 layers.forEach(layer => {
-  const table = layer.replace(/_SDO/, '');
+  const table = getTableName(layer);
+  const jsonUrl = getJsonUrl(layer);
   const sql = `${outDir}${table}.sql`;
   fs.appendFileSync(`${outDir}all.sql`, `\\i ${table}.sql;\n`); 
-  console.log(`fetching ${url}${layer}`);
-  fetch(`${url}${layer}`).then(response => {
+  console.log(`fetching ${jsonUrl}`);
+  fetch(jsonUrl).then(response => {
     response.json().then(geojson => {
       const features = geojson.features;
       dropTable(table, sql);
