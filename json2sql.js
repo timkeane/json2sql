@@ -93,6 +93,7 @@ const reserved = [
 ];
 
 fs.rmSync(outDir, {recursive: true, force: true});
+fs.mkdirSync('./sql');
 fs.mkdirSync(outDir);
 
 function dropTable(table, sql) {
@@ -148,7 +149,7 @@ layers.forEach(layer => {
             if (value === undefined || value === null || value === '') {
               values.push('NULL');
             } else {
-              values.push(`'${value.replace(/'/g, "''")}'`);
+              values.push(`'${(value + '').replace(/'/g, "''")}'`);
             }
           }
         });
