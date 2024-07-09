@@ -92,8 +92,10 @@ const reserved = [
   'WHEN'
 ];
 
+if (!fs.existsSync('./sql')) {
+  fs.mkdirSync('./sql');
+}
 fs.rmSync(outDir, {recursive: true, force: true});
-fs.mkdirSync('./sql');
 fs.mkdirSync(outDir);
 
 function dropTable(table, sql) {
