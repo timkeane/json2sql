@@ -2,7 +2,7 @@
 
 Creates SQL scripts from a GeoJSON `FeatureCollection`.
 
-To configure the script you must include a `.env` file in the root of this project. There are 2 options for configuring the script environment:
+To configure the script you must include a `.env` file in the root of this project. There are 2 options for configuring the script environment.
 
 ## Option 1 (from a geoserver WFS):
 ```sh
