@@ -19,9 +19,7 @@ OUT=./sql/basemap/
 
 ## Option 2 (from a GeoJSON source other than geoserver - i.e. NYC Open Data):
 ```sh
-# A list of objects containing
-# a `name` property for the layer name and a `url` property
-# for the GeoJSON FeatureCollection
+# A list of objects containing a `name` property for the layer name and a `url` property for the GeoJSON FeatureCollection
 LAYERS=[{"name":"PARK","url":"https://data.cityofnewyork.us/api/views/enfh-gkve/rows.geojson?date=20240709&accessType=DOWNLOAD"}]
 # The output folder for generated SQL scripts
 OUT=./sql/planimetric/
