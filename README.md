@@ -2,9 +2,10 @@
 
 Creates SQL scripts from a GeoJSON `FeatureCollection`.
 
+## Configuration
 To configure the script you must include a `.env` file in the root of this project. There are 2 options for configuring the script environment.
 
-## Option 1 (from a geoserver WFS):
+### Option 1 (from a geoserver WFS):
 ```sh
 PROTOCOL=http
 HOST=hostname
@@ -17,7 +18,7 @@ LAYERS=["BACKGROUND_SDO","BOROUGH_BORDER_SDO","BOROUGH_POINT_SDO","HYDRO_LABELLI
 OUT=./sql/basemap/
 ```
 
-## Option 2 (from a GeoJSON source other than geoserver - i.e. NYC Open Data):
+### Option 2 (from a GeoJSON source other than geoserver - i.e. NYC Open Data):
 ```sh
 # A list of objects containing a `name` property for the layer name and a `url` property for the GeoJSON FeatureCollection
 LAYERS=[{"name":"PARK","url":"https://data.cityofnewyork.us/api/views/enfh-gkve/rows.geojson?date=20240709&accessType=DOWNLOAD"}]
@@ -25,6 +26,7 @@ LAYERS=[{"name":"PARK","url":"https://data.cityofnewyork.us/api/views/enfh-gkve/
 OUT=./sql/planimetric/
 ```
 
+## Usage
 
 `npm install`
 
